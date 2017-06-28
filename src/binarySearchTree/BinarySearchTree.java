@@ -68,7 +68,7 @@ public class BinarySearchTree {
 	 * 遍历树
 	 * 1.前序遍历：先根结点，然后再所有的左结点，最后再所有的右结点
 	 * 2.中序遍历：先左结点，然后再根结点，最后再所有的右结点；通过遍历的次序可以看到用这种方式遍历会得到有序的结点序列
-	 * 3.后序遍历：先右结点，然后再左结点，最后再根结点
+	 * 3.后序遍历：先左结点，然后再右结点，最后再根结点
 	 * @param key
 	 */
 	
@@ -96,10 +96,10 @@ public class BinarySearchTree {
 	
 	//后序遍历
 	public void postorder_iterator(Node node){
-		if(node.rightChild != null)
-			postorder_iterator(node.rightChild);
 		if(node.leftChild != null)
 			postorder_iterator(node.leftChild);
+		if(node.rightChild != null)
+			postorder_iterator(node.rightChild);
 		System.out.println(node.key+":"+node.value.toString());
 	}
 	
@@ -128,7 +128,17 @@ public class BinarySearchTree {
 	}
 	
 	//根据key删除一个结点
+	/**
+	 * 这里删除一个结点有3种情况：
+	 * 1：该结点是叶子结点		处理方式：直接删除；
+	 * 2：该结点只有一个孩子（分两种：a.只有左孩子；b.只有右孩子） 处理方式：将它的孩子结点替换他的位置；
+	 * 3: 该结点有两个孩子 首先在该结点的右子树上找到最小的结点替换该结点，然后将这个找到的最小结点删除即可
+	 * @param key
+	 * 
+	 */
 	public void delete(int key){
+		if(root == null)
+			return;
 		return;
 	}
 }
