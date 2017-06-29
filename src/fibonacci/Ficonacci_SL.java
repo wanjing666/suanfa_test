@@ -1,5 +1,7 @@
 package fibonacci;
 
+import java.util.HashMap;
+
 /**
  * 斐波拉契数列
  * @author CP_WJ
@@ -29,8 +31,11 @@ public class Ficonacci_SL {
 	}
 	
 	public static void main(String[] args) {
-		//System.out.println(ficonacci1(10));	//1分钟都执行不完，我怕死机，就直接断开了。。。。
-		
+//		long begin = System.currentTimeMillis();
+//		System.out.println(ficonacci1(20));	//1分钟都执行不完，我怕死机，就直接断开了。。。。
+//		System.out.println(System.currentTimeMillis()- begin);
+		long begin2 = System.currentTimeMillis();
 		System.out.println(ficonacci2(100));	//不到1S
+		System.out.println(System.currentTimeMillis()- begin2);
 	}
 }

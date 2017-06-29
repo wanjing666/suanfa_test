@@ -139,6 +139,90 @@ public class BinarySearchTree {
 	public void delete(int key){
 		if(root == null)
 			return;
+		Node current = root;
+		Node parent = root;
+		boolean isLeftChild = true;
+		while(current.key != key){
+			if(key > current.key){
+				parent = current;
+				current = current.rightChild;
+				isLeftChild = false;
+			}else{
+				parent = current;
+				current = current.leftChild;
+				isLeftChild = true;
+			}
+			if(current == null)
+				break;
+		}
+		
+		//如果经过查找，没有找到，则说明不存在该key值的结点
+		if(current == null)
+			return;
+		
+		//当前结点没有孩子的情况
+		if(current.leftChild == null && current.rightChild == null){
+			//如果是根节点
+			if(current.key == root.key){
+				root = null;
+				return;
+			}
+			if(isLeftChild)
+				parent.leftChild = null;
+			else
+				parent.rightChild = null;
+		}else if(current.leftChild != null && current.rightChild == null){	//只有左孩子
+			if(current.key == root.key){
+				root = root.leftChild;
+				return;
+			}
+			if(isLeftChild)
+				parent.leftChild = current.leftChild;
+			else
+				parent.rightChild = current.leftChild;
+		}else if(current.leftChild == null && current.rightChild != null){//只有右孩子
+			if(current.key == root.key){
+				root = root.rightChild;
+				return;
+			}
+			if(isLeftChild)
+				parent.leftChild = current.rightChild;
+			else
+				parent.rightChild = current.rightChild;
+		}else{	//左右孩子都有的情况
+			//先调用方法获取待删除结点的后续结点，并将后续节点从原来的位置删除
+			Node next = getNext(current.rightChild);
+			//然后替换待删除的结点
+			if(current.key == root.key){
+				root =next;
+				return;
+			}
+			if(isLeftChild)
+				parent.leftChild = next;
+			else
+				parent.rightChild = next;
+			next.leftChild = current.leftChild;
+			next.rightChild = current.rightChild;
+		}
 		return;
+	}
+	
+	//找到删除结点的后续结点
+	public Node getNext(Node current){
+		Node parent = current;
+		//从待删除的结点的右子树开始。
+		Node node = current.rightChild;
+		//一直找右子树中的最小的。也就是没有左孩子的结点。
+		while(node.leftChild != null){
+			parent = node;
+			node = node.leftChild;
+		}
+		//然后删除找到的结点并返回（删除其实就是把它的父节点的对应孩子位赋值为空）
+		if(node.key == current.rightChild.key)
+			parent.leftChild = null;
+		else
+			parent.rightChild = null;
+		return node;
+		
 	}
 }
